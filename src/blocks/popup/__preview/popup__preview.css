@@ -1,0 +1,25 @@
+.popup__preview {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  visibility: collapse;
+  opacity: 0;
+  height: 0;
+  transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+
+.popup__preview .popup_opened {
+  display: flex;
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+  transition: height 0ms 0ms, opacity 600ms 0ms;
+}

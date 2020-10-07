@@ -1,0 +1,24 @@
+.popup__form-item {
+  border: 0px;
+  border-color: inherit;
+  width: 100%;
+  padding: 0;
+  margin: 54px 0px 0px;
+  box-sizing: border-box;
+  background-color: transparent;
+  text-align: start;
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #000;
+}
+
+@media screen and (max-width: 450px) {
+  .popup__form-item {
+    font-size: 12px;
+    line-height: 1.25;
+    margin: 36px 0px 0px;
+  }
+}

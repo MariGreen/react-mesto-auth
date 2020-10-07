@@ -1,0 +1,16 @@
+.element__like {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+  background-image: url(../../../images/elements_heart_black.svg);
+  width: 21px;
+  height: 18px;
+}
+
+.element__like:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

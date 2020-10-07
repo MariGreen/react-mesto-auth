@@ -1,0 +1,37 @@
+.element__picture {
+  width: 100%;
+  height: 282px;  
+  object-fit: cover;
+  min-height: 50px;
+  text-align: center;  
+  display: block;
+  position: relative;
+}
+
+.element__picture:hover {
+  opacity: 0.9;
+}
+
+
+.element__picture:after {  
+  content: "\f1c5" "Мы сожалеем, но эта картинка не загрузилась :( ";
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #fff;
+  display: block;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-image: url(../../../images/elements_diogen.jpg);
+}
+
+.element__picture:hover:after {
+  visibility: collapse;
+}

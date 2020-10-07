@@ -1,0 +1,27 @@
+@import url(../element/__picture/element__picture.css);
+@import url(../element/__trash/element__trash.css);
+@import url(../element/__data/element__data.css);
+@import url(../element/__place/element__place.css);
+@import url(../element/__like/element__like.css);
+@import url(../element/__like/_black/element__like_black.css);
+@import url(../element/__likes/element__likes.css);
+@import url(../element/_template/element_template.css);
+@import url(../element/__bubble/element__bubble.css);
+@import url(../element/__bubble-text/element__bubble-text.css);
+
+.element {
+  width: 282px;
+  background-color: #fff;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 625px) and (max-width: 1019px) {
+  .element:nth-of-type(odd) {
+    justify-self: end;
+  }
+}
