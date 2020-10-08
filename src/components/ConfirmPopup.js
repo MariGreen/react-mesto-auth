@@ -18,6 +18,8 @@ function ConfirmPopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      className="popup__form-container"
+      isCloseButtonVisible={true}
     >
       <button type="submit" className="popup__delete-button">
         {loading ? `Удаление...` : `Да`}

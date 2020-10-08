@@ -5,6 +5,7 @@ function Header() {
   return (
     <div className="header">
       <img alt="логотип проекта" src={headerLogo} className="header__logo" />
+      <p className='header__link'>Войти</p>
     </div>
   );
 }

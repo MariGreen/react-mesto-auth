@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
+import Login from './Login';
 import ConfirmPopup from './ConfirmPopup';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
@@ -11,6 +12,7 @@ import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { InitialLoadingContext } from '../contexts/InitialLoadingContext';
 import { LoadingContext } from '../contexts/LoadingContext';
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -183,8 +185,10 @@ function App() {
         <LoadingContext.Provider value={loading}>
           <CurrentUserContext.Provider value={currentUser}>
             <Header />
+            <Login/>
 
-            <Main
+
+            {/* <Main
               onEditAvatar={handleEditAvatarClick}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
@@ -192,9 +196,9 @@ function App() {
               onTrashClick={handleTrashClick}
               onCardLike={handleCardLike}
               cards={cards}
-            />
+            /> */}
 
-            <Footer />
+            {/* <Footer /> */}
 
             <section className="popups">
               <EditAvatarPopup
