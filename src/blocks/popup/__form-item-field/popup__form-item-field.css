@@ -5,3 +5,9 @@
   margin: 0 auto 33px;
   box-shadow: none;
 }
+
+.popup__form-item-field_invert {
+  border-bottom: 1px solid #ccc;
+  background-color: #000;
+  color: #ccc;
+}

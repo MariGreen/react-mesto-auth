@@ -17,6 +17,11 @@
   min-height: 51px;
 }
 
+.popup__save-button_invert {
+  background-color: rgb(255, 255, 255);
+  color: #000;
+}
+
 .popup__save-button:hover {
   opacity: 0.8;
   cursor: pointer;

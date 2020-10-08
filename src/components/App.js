@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import Login from './Login';
+import Authorization from './Authorization';
 import ConfirmPopup from './ConfirmPopup';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
@@ -186,6 +187,7 @@ function App() {
           <CurrentUserContext.Provider value={currentUser}>
             <Header />
             <Login/>
+            <Authorization/>
 
 
             {/* <Main

@@ -35,8 +35,6 @@ function AddPlacePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
-      className="popup__form-container"
-      isCloseButtonVisible={true}
     >
       <fieldset className="popup__form-item">
         <div className="popup__form-element">
