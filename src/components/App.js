@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter, Switch, Redirect, useHistory } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/auth.js';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import Login from './Login';
-import Authorization from './Authorization';
+import Register from './Register';
 import ConfirmPopup from './ConfirmPopup';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
@@ -27,6 +30,51 @@ function App() {
   const [initialLoading, setInitialLoading] = React.useState(true);
 
   const [selectedCard, setSelectedCard] = React.useState({});
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const history = useHistory();
+
+  const tokenCheck = () => {
+    let jwt = localStorage.getItem('jwt');
+    if(jwt) {
+      auth.getContent(jwt).then((res) => {
+      if (res) {
+        setLoggedIn(true);
+        setUserData({
+          email: res.email
+        });
+        history.push('/')
+        }
+      })
+    }
+  }
+
+  useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  const handleLogin = (res) => {
+    setLoggedIn(true);
+    setUserData({email: res.email})
+  }
+
+
+  const onAuth = (username, password) => {
+    return auth.authorize(username, password).then((data) => {
+      if (!data) {
+        throw new Error ('Что-то не так');
+      }
+
+      if (data.jwt && data.user) {
+        setLoggedIn(true);
+        setUserData({email: data.user.email})
+      }
+      
+    })
+  }
+
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -186,21 +234,44 @@ function App() {
         <LoadingContext.Provider value={loading}>
           <CurrentUserContext.Provider value={currentUser}>
             <Header />
-            <Login/>
-            <Authorization/>
+            <BrowserRouter>
+              <Switch>
+                <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Main} onEditAvatar={handleEditAvatarClick}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  onTrashClick={handleTrashClick}
+                  onCardLike={handleCardLike}
+                  cards={cards}/>
+
+                <Route path='/sign-in' >
+                  <Login onAuth={onAuth} tokenCheck={tokenCheck}/>
+                </Route>
+
+                <Route path='/sing-up' >
+                  <Register/>
+                </Route> 
+
+                <Route>
+                  {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}
+                </Route>             
+                
 
 
-            {/* <Main
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onTrashClick={handleTrashClick}
-              onCardLike={handleCardLike}
-              cards={cards}
-            /> */}
+                {/* <Main
+                  onEditAvatar={handleEditAvatarClick}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  onTrashClick={handleTrashClick}
+                  onCardLike={handleCardLike}
+                  cards={cards}
+                /> */}
+              </Switch>
+            </BrowserRouter>
+            <Footer />
+            
 
-            {/* <Footer /> */}
 
             <section className="popups">
               <EditAvatarPopup

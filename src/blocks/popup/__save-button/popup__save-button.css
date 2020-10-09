@@ -20,6 +20,7 @@
 .popup__save-button_invert {
   background-color: rgb(255, 255, 255);
   color: #000;
+  margin: 218px auto 0px;
 }
 
 .popup__save-button:hover {

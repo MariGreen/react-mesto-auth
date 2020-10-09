@@ -2,48 +2,45 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { LoadingContext } from '../contexts/LoadingContext';
 import Authorization from './Authorization';
-// import { register, authorize, getContent } from '../utils/auth';
+import * as auth from '../utils/auth';
 
-const Login = ({onAuth}) => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
-const history = useHistory();
-const loading = React.useContext(LoadingContext);
+  const history = useHistory();
+  const loading = React.useContext(LoadingContext);
 
-function handleChangeEmail(evt) {
-  setEmail(evt.target.value);
-}
-
-function handleChangePassword(evt) {
-  setPassword(evt.target.value);
-}
-
-const resetForm = () => {
-  setEmail('');
-  setPassword('');
-  setMessage('');
-};
-
-const handleSubmit = (evt) => {
-  evt.preventDeault()
-
-  if(!email|| !password) {
-    return;
+  function handleChangeEmail(evt) {
+    setEmail(evt.target.value);
+  }
+  
+  function handleChangePassword(evt) {
+    setPassword(evt.target.value);
   }
 
-  onAuth(password, email )
-  .then(()=> resetForm)
-  .then(() => history.push('/'))
-  .catch((err) => setMessage(err || 'Неудачно'));
-};
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    // if(password !== confirmPassword) {
+    //   setMessage('Пароли должны совпадать');
+    //   return;
+    // }
+    auth.register(email, password).then((res)=> {
+      if (res.statusCode !== 400) {
+        setMessage('');
+        history.push('/sign-in/');
+      } else{
+        setMessage('Что-то пошло не так' || res.message[0].messages[0].message);
+      }
+    });
+  };
 
-return (
-
-  <Authorization 
-  name="login"
-  title="Вход"
+  return (
+    <Authorization 
+  name="registration"
+  title="Регистрация"
   onSubmit={handleSubmit}>
     <fieldset className="popup__form-item">
        <div className="popup__form-element">
@@ -79,18 +76,17 @@ return (
       </div>
     </fieldset>
     <button type="submit" className="popup__save-button popup__save-button_invert">
-        {loading ? `Заходим...` : `Войти`}
+        {loading ? `Регистрация...` : `Зарегистрироваться`}
       </button>
       <div className='auth__form_singup'>
-        <p className='auth__form-item'>Ещё не зарегистрированы?</p>
-        <Link to='/sing-up' className='auth__form-item'>Регистрация
+        <p className='auth__form-item'>Уже зарегистрированы?</p>
+        <Link to='/sign-in' className='auth__form-item'>Войти
         </Link>
       </div>
 
   </Authorization>
-  
-)
+  )
 
 }
 
-export default Login;
+export default Register;
