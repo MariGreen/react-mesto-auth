@@ -7,8 +7,7 @@ import * as auth from '../utils/auth';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('');  
 
   const history = useHistory();
   const loading = React.useContext(LoadingContext);
@@ -23,14 +22,13 @@ const Register = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if(password !== confirmPassword) {
-    //   setMessage('Пароли должны совпадать');
-    //   return;
-    // }
+    
+    
     auth.register(email, password).then((res)=> {
       if (res.statusCode !== 400) {
-        setMessage('');
+        setMessage('');        
         history.push('/sign-in/');
+        
       } else{
         setMessage('Что-то пошло не так' || res.message[0].messages[0].message);
       }

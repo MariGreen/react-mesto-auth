@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { LoadingContext } from '../contexts/LoadingContext';
 import Authorization from './Authorization';
+
 // import { register, authorize, getContent } from '../utils/auth';
 
 const Login = ({onAuth}) => {
@@ -14,6 +15,7 @@ const loading = React.useContext(LoadingContext);
 
 function handleChangeEmail(evt) {
   setEmail(evt.target.value);
+
 }
 
 function handleChangePassword(evt) {
@@ -27,8 +29,7 @@ const resetForm = () => {
 };
 
 const handleSubmit = (evt) => {
-  evt.preventDeault()
-
+  evt.preventDefault();
   if(!email|| !password) {
     return;
   }

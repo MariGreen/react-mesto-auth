@@ -12,6 +12,7 @@ import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import PopupSuccess from './PopupSuccess';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { InitialLoadingContext } from '../contexts/InitialLoadingContext';
@@ -24,6 +25,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
+
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -172,6 +175,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false);
+    setIsSuccessPopupOpen(false);
     setSelectedCard({});
   }
 
@@ -294,6 +298,10 @@ function App() {
                 card={selectedCard}
                 onConfirm={handleConfirmSubmit}
               />
+
+              <PopupSuccess
+              isOpen={isSuccessPopupOpen}
+              onClose={closeAllPopups}/>
 
               <PopupWithImage isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
             </section>
