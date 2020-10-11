@@ -12,11 +12,14 @@ import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import PopupSuccess from './PopupSuccess';
+import InfoTooltip from './InfoTooltip';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { InitialLoadingContext } from '../contexts/InitialLoadingContext';
 import { LoadingContext } from '../contexts/LoadingContext';
+
+import successSign from '../images/popup_success.svg'
+import failedSign from '../images/popup_fail.svg'
 
 
 function App() {
@@ -25,13 +28,14 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [initialLoading, setInitialLoading] = React.useState(true);
-
+  const [message, setMessage] = React.useState({sign: failedSign, text: ''});
+  
   const [selectedCard, setSelectedCard] = React.useState({});
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -169,14 +173,27 @@ function App() {
       });
   }
 
+  function handleSucessfulRegister () {
+
+    setMessage( {sign: successSign, text: 'Вы успешно зарегистрировались'});
+    setIsInfoTooltipOpen(true);
+  }
+  function handleFailedRegister () {
+
+    setMessage( {sign: failedSign, text: 'Вы неудачнк'});
+    setIsInfoTooltipOpen(true);
+  }
+  
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false);
-    setIsSuccessPopupOpen(false);
+    setIsInfoTooltipOpen(false);
     setSelectedCard({});
+    
   }
 
   React.useEffect(() => {
@@ -236,6 +253,7 @@ function App() {
     <div className="page">
       <InitialLoadingContext.Provider value={initialLoading}>
         <LoadingContext.Provider value={loading}>
+          
           <CurrentUserContext.Provider value={currentUser}>
             <Header />
             <BrowserRouter>
@@ -253,7 +271,7 @@ function App() {
                 </Route>
 
                 <Route path='/sing-up' >
-                  <Register/>
+                  <Register onSuccessfulRegister = {handleSucessfulRegister} onFailedRegister = {handleFailedRegister}/>
                 </Route> 
 
                 <Route>
@@ -299,13 +317,15 @@ function App() {
                 onConfirm={handleConfirmSubmit}
               />
 
-              <PopupSuccess
-              isOpen={isSuccessPopupOpen}
-              onClose={closeAllPopups}/>
+              <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              mess = {message}/>
 
               <PopupWithImage isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
             </section>
           </CurrentUserContext.Provider>
+          
         </LoadingContext.Provider>
       </InitialLoadingContext.Provider>
     </div>

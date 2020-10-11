@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { LoadingContext } from '../contexts/LoadingContext';
+
 import Authorization from './Authorization';
 import * as auth from '../utils/auth';
 
-const Register = () => {
+const Register = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');  
 
-  const history = useHistory();
-  const loading = React.useContext(LoadingContext);
+  const loading = React.useContext(LoadingContext);  
+  const history = useHistory();  
+
+
 
   function handleChangeEmail(evt) {
     setEmail(evt.target.value);
@@ -24,14 +26,17 @@ const Register = () => {
     evt.preventDefault();
     
     
-    auth.register(email, password).then((res)=> {
-      if (res.statusCode !== 400) {
-        setMessage('');        
-        history.push('/sign-in/');
-        
-      } else{
-        setMessage('Что-то пошло не так' || res.message[0].messages[0].message);
+    auth.register(email, password).then((response)=> {
+      if (response.status !== 400) {
+        props.onSuccessfulRegister();        
+        history.push('/sign-in/');        
+      } else {
+        throw new Error ('Something went wrong');        
       }
+    })
+    .catch((err) => {
+      console.log(err);
+      props.onFailedRegister();
     });
   };
 

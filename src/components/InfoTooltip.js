@@ -1,11 +1,9 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import successSign from '../images/popup_success.svg'
 
 
-function SuccessPopup(props) {
-  
 
+function InfoTooltip(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
     
@@ -13,18 +11,18 @@ function SuccessPopup(props) {
 
   return (
     <PopupWithForm
-      name="success"
+      name="infoTooltip"
       title=""
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
     >
       <div className="popup__success">
-      <img alt="успешная регистраця" src={successSign} className="popup__sign" />
-      <p className='popup__title'>Вы успешно зарегистрировались!</p>
+      <img alt={props.mess.text} src={props.mess.sign} className="popup__sign" />
+      <p className='popup__title'>{props.mess.text}</p>
     </div>
     </PopupWithForm>
   );
 }
 
-export default SuccessPopup;
+export default InfoTooltip;

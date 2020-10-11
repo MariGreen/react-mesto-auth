@@ -11,8 +11,24 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   },
   body: JSON.stringify({ email, password }),
 })
-  .then((response) => response.json())
-  .then((res) => res)
+  // .then((response) => response.json())
+  // .then((res) => res)
+  // .catch((err) => console.log(err));
+  .then((response) => {
+    try {
+      if (response.status === 200){
+        return response.json();
+      }
+      else {
+        return response;
+      };
+    } catch(err){
+      return (err)
+    }
+  })
+  .then((res) => {
+    return res;
+  })
   .catch((err) => console.log(err));
 
   export const authorize = (password, email) => fetch(`${BASE_URL}/signin`, {
