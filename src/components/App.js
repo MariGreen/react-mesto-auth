@@ -7,6 +7,7 @@ import Footer from './Footer';
 import Main from './Main';
 import Login from './Login';
 import Register from './Register';
+import Navbar from './NavBar';
 import ConfirmPopup from './ConfirmPopup';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
@@ -45,6 +46,7 @@ function App() {
 
   const tokenCheck = () => {
     let jwt = localStorage.getItem('jwt');
+    
     if(jwt) {
       auth.getContent(jwt).then((res) => {
       if (res) {
@@ -52,7 +54,7 @@ function App() {
         setUserData({
           email: res.email
         });
-        history.push('/')
+        history.push('/');
         }
       })
     }
@@ -76,10 +78,14 @@ function App() {
 
       if (data.jwt && data.user) {
         setLoggedIn(true);
-        setUserData({email: data.user.email})
+        setUserData({email: data.user.email});
       }
-      
+      console.log(data);//token
     })
+  }
+
+  function onSignOut() {
+    setLoggedIn(false);
   }
 
 
@@ -255,7 +261,10 @@ function App() {
         <LoadingContext.Provider value={loading}>
           
           <CurrentUserContext.Provider value={currentUser}>
-            <Header />
+            <Header email={userData.email} text={'text'} loggedIn={loggedIn} onSignOut={onSignOut}>
+             
+              {/* <Navbar email={userData.email} text={'text'} loggedIn={loggedIn}/> */}
+            </Header>
             <BrowserRouter>
               <Switch>
                 <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Main} onEditAvatar={handleEditAvatarClick}
