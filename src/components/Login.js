@@ -29,12 +29,12 @@ const resetForm = () => {
 };
 
 const handleSubmit = (evt) => {
-  evt.preventDefault();
-  if(!email|| !password) {
+  evt.preventDefault();  
+  if(!email|| !password) {    
     return;
   }
 
-  onAuth(password, email )
+  onAuth(password, email )//email and password est
   .then(()=> resetForm)
   .then(() => history.push('/'))
   .catch((err) => setMessage(err || 'Неудачно'));

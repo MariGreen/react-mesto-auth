@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const NavBar = (props) => {
- 
-  console.log(props);
+const NavBar = (props) => {  
   const history = useHistory();
+ 
+
   let Nadpis = ''
   props.loggedIn ? Nadpis = 'Выйти' : Nadpis = 'Вход';
   
   function signOut () {
+    
     props.onSignOut();
     localStorage.removeItem('jwt');
     history.push('/sign-in');
+    
   }
   return (
     <nav className='header__navbar'>

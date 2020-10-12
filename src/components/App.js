@@ -45,23 +45,28 @@ function App() {
   const history = useHistory();
 
   const tokenCheck = () => {
-    let jwt = localStorage.getItem('jwt');
+    let jwt = localStorage.getItem('jwt');    
+    if(jwt) {      
+      auth.getContent(jwt).then((res) => {//token yest
+       // console.log(res); v res id i email     
     
-    if(jwt) {
-      auth.getContent(jwt).then((res) => {
       if (res) {
         setLoggedIn(true);
-        setUserData({
+         setUserData({
           email: res.email
         });
         history.push('/');
         }
       })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   }
-
+ 
   useEffect(() => {
     tokenCheck();
+    //
   }, []);
 
   const handleLogin = (res) => {
@@ -70,17 +75,13 @@ function App() {
   }
 
 
-  const onAuth = (username, password) => {
-    return auth.authorize(username, password).then((data) => {
+  const onAuth = (password, email) => {    
+    return auth.authorize(password, email).then((data) => {      
       if (!data) {
         throw new Error ('Что-то не так');
-      }
-
-      if (data.jwt && data.user) {
-        setLoggedIn(true);
-        setUserData({email: data.user.email});
-      }
-      console.log(data);//token
+      } else {    
+        setLoggedIn(true);       
+      }      
     })
   }
 
@@ -265,7 +266,7 @@ function App() {
              
               {/* <Navbar email={userData.email} text={'text'} loggedIn={loggedIn}/> */}
             </Header>
-            <BrowserRouter>
+            {/* <BrowserRouter> */}
               <Switch>
                 <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Main} onEditAvatar={handleEditAvatarClick}
                   onEditProfile={handleEditProfileClick}
@@ -299,7 +300,7 @@ function App() {
                   cards={cards}
                 /> */}
               </Switch>
-            </BrowserRouter>
+            {/* </BrowserRouter> */}
             <Footer />
             
 
