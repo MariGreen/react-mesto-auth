@@ -84,8 +84,7 @@ return (
       </button>
       <div className='auth__form_singup'>
         <p className='auth__form-item'>Ещё не зарегистрированы?</p>
-        <Link to='/sing-up' className='auth__form-item'>Регистрация
-        </Link>
+        <Link to='/sign-up' className='auth__form-item'>Регистрация</Link>
       </div>
 
   </Authorization>

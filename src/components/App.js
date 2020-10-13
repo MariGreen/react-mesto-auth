@@ -7,7 +7,6 @@ import Footer from './Footer';
 import Main from './Main';
 import Login from './Login';
 import Register from './Register';
-import Navbar from './NavBar';
 import ConfirmPopup from './ConfirmPopup';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopup from './EditProfilePopup';
@@ -30,6 +29,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -51,12 +51,16 @@ function App() {
        // console.log(res); v res id i email     
     
       if (res) {
-        setLoggedIn(true);
+        if (res.status === 401) {
+          localStorage.removeItem('jwt');
+        } else {
+         setLoggedIn(true);
          setUserData({
-          email: res.email
+          email: res.data.email
         });
         history.push('/');
-        }
+       }
+      }
       })
       .catch((err) => {
         console.log(err);
@@ -69,18 +73,13 @@ function App() {
     //
   }, []);
 
-  const handleLogin = (res) => {
-    setLoggedIn(true);
-    setUserData({email: res.email})
-  }
-
 
   const onAuth = (password, email) => {    
     return auth.authorize(password, email).then((data) => {      
       if (!data) {
         throw new Error ('Что-то не так');
       } else {    
-        setLoggedIn(true);       
+        tokenCheck();       
       }      
     })
   }
@@ -181,15 +180,16 @@ function App() {
   }
 
   function handleSucessfulRegister () {
-
     setMessage( {sign: successSign, text: 'Вы успешно зарегистрировались'});
     setIsInfoTooltipOpen(true);
   }
-  function handleFailedRegister () {
 
-    setMessage( {sign: failedSign, text: 'Вы неудачнк'});
+  function handleFailedRegister () {
+    setMessage( {sign: failedSign, text: 'Вы неудачник'});
     setIsInfoTooltipOpen(true);
   }
+
+  
   
 
   function closeAllPopups() {
@@ -262,10 +262,10 @@ function App() {
         <LoadingContext.Provider value={loading}>
           
           <CurrentUserContext.Provider value={currentUser}>
-            <Header email={userData.email} text={'text'} loggedIn={loggedIn} onSignOut={onSignOut}>
-             
-              {/* <Navbar email={userData.email} text={'text'} loggedIn={loggedIn}/> */}
+            <Header onSignOut={onSignOut} email={userData.email} loggedIn={loggedIn} >             
+              {/* <Navbar  /> */}
             </Header>
+
             {/* <BrowserRouter> */}
               <Switch>
                 <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Main} onEditAvatar={handleEditAvatarClick}
@@ -277,10 +277,10 @@ function App() {
                   cards={cards}/>
 
                 <Route path='/sign-in' >
-                  <Login onAuth={onAuth} tokenCheck={tokenCheck}/>
+                  <Login onAuth={onAuth}/>
                 </Route>
 
-                <Route path='/sing-up' >
+                <Route path='/sign-up' >
                   <Register onSuccessfulRegister = {handleSucessfulRegister} onFailedRegister = {handleFailedRegister}/>
                 </Route> 
 
