@@ -17,9 +17,9 @@ function InfoTooltip(props) {
       onClose={props.onClose}
       onSubmit={handleSubmit}
     >
-      <div className="popup__success">
+      <div className="popup__info">
       <img alt={props.mess.text} src={props.mess.sign} className="popup__sign" />
-      <p className='popup__title'>{props.mess.text}</p>
+      <p className='popup__title popup__title_message'>{props.mess.text}</p>
     </div>
     </PopupWithForm>
   );

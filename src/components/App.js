@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, BrowserRouter, Switch, Redirect, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../utils/auth.js';
 import Header from './Header';
@@ -23,21 +23,21 @@ import failedSign from '../images/popup_fail.svg'
 
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   
 
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-  const [initialLoading, setInitialLoading] = React.useState(true);
-  const [message, setMessage] = React.useState({sign: failedSign, text: ''});
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [message, setMessage] = useState({sign: failedSign, text: ''});
   
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [selectedCard, setSelectedCard] = useState({});
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
@@ -45,44 +45,37 @@ function App() {
   const history = useHistory();
 
   const tokenCheck = () => {
-    let jwt = localStorage.getItem('jwt');    
-    if(jwt) {      
-      auth.getContent(jwt).then((res) => {//token yest
-       // console.log(res); v res id i email     
-    
-      if (res) {
-        if (res.status === 401) {
-          localStorage.removeItem('jwt');
-        } else {
-         setLoggedIn(true);
-         setUserData({
-          email: res.data.email
-        });
-        history.push('/');
-       }
-      }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.getContent(jwt)
+        .then((res) => {
+          if (res) {
+            if (res === 401) {
+              localStorage.removeItem(jwt);
+            } else {
+              setLoggedIn(true);
+              setUserData({
+                email: res.data.email,
+              });
+              history.push('/');
+            }
+          }
+        })
+        .catch(() => console.log({ message: 'Токен не передан или передан не в том формате' }));
     }
-  }
+  };
  
-  useEffect(() => {
-    tokenCheck();
-    //
-  }, []);
+  useEffect(() => tokenCheck(), []);
 
 
-  const onAuth = (password, email) => {    
-    return auth.authorize(password, email).then((data) => {      
-      if (!data) {
-        throw new Error ('Что-то не так');
-      } else {    
-        tokenCheck();       
-      }      
-    })
-  }
+  const onAuth = (password, email) => auth.authorize(password, email)
+  .then((data) => {
+    if (!data) {
+      throw new Error({ message: 'Токен не передан или передан не в том формате' });
+    } else {
+      tokenCheck();
+    }
+  }).catch((err) => console.log(err));
 
   function onSignOut() {
     setLoggedIn(false);
@@ -180,18 +173,16 @@ function App() {
   }
 
   function handleSucessfulRegister () {
-    setMessage( {sign: successSign, text: 'Вы успешно зарегистрировались'});
+    setMessage( {sign: successSign, text: 'Вы успешно зарегистрировались!'});
     setIsInfoTooltipOpen(true);
   }
 
   function handleFailedRegister () {
-    setMessage( {sign: failedSign, text: 'Вы неудачник'});
+    setMessage( {sign: failedSign, text: 'Что-то пошло не так! Попробуйте ещё раз.'});
     setIsInfoTooltipOpen(true);
   }
 
   
-  
-
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -263,10 +254,8 @@ function App() {
           
           <CurrentUserContext.Provider value={currentUser}>
             <Header onSignOut={onSignOut} email={userData.email} loggedIn={loggedIn} >             
-              {/* <Navbar  /> */}
             </Header>
 
-            {/* <BrowserRouter> */}
               <Switch>
                 <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Main} onEditAvatar={handleEditAvatarClick}
                   onEditProfile={handleEditProfileClick}
@@ -286,21 +275,10 @@ function App() {
 
                 <Route>
                   {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}
-                </Route>             
-                
+                </Route>
 
-
-                {/* <Main
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onCardClick={handleCardClick}
-                  onTrashClick={handleTrashClick}
-                  onCardLike={handleCardLike}
-                  cards={cards}
-                /> */}
               </Switch>
-            {/* </BrowserRouter> */}
+
             <Footer />
             
 

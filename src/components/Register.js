@@ -83,7 +83,7 @@ const Register = (props) => {
       </button>
       <div className='auth__form_singup'>
         <p className='auth__form-item'>Уже зарегистрированы?</p>
-        <Link to='/sign-in' className='auth__form-item'>Войти
+        <Link to='/sign-in' className='auth__form-item auth__form-item_link'>Войти
         </Link>
       </div>
 

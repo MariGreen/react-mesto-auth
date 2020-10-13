@@ -37,8 +37,86 @@
   font-size: 14px;
   line-height: 1.21;
   color: #FFF;
+  text-decoration: none;
+  margin: 0px 5px 0px 0px;
 }
 
+.auth__form-item_link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+
 .auth__form_singup {
+  display: flex;
+  flex-direction: row;
   margin: 15px auto 0px;
+}
+
+.header__navbar {
+  display: flex;
+  flex-direction: row;  
+}
+
+.header__nav{  
+  margin-left: 0;
+  margin-right: 0;
+  list-style-type: none;
+  display: flex;
+
+}
+
+.header__item {
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.22;
+  color: #FFF;
+
+}
+
+.header__link {
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;  
+  background-color: transparent;
+  display: inline-block;
+  margin-left: 24px;
+  color: #FFF;  
+}
+
+.header__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.header__link_loggedIn {
+  color:#A9A9A9;
+}
+
+.popup__info {
+  display: flex;
+  flex-direction: column;
+  margin: 25px auto;
+}
+
+.popup__sign {
+  width: 120px;
+  margin: 0px auto 32px;
+
+}
+
+.popup__title_message {
+  text-align: center;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__title_message {
+    text-align: center;
+    margin: 0 auto;
+  }
 }

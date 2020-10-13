@@ -3,8 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { LoadingContext } from '../contexts/LoadingContext';
 import Authorization from './Authorization';
 
-// import { register, authorize, getContent } from '../utils/auth';
-
 const Login = ({onAuth}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +13,6 @@ const loading = React.useContext(LoadingContext);
 
 function handleChangeEmail(evt) {
   setEmail(evt.target.value);
-
 }
 
 function handleChangePassword(evt) {
@@ -34,7 +31,7 @@ const handleSubmit = (evt) => {
     return;
   }
 
-  onAuth(password, email )//email and password est
+  onAuth(password, email )
   .then(()=> resetForm)
   .then(() => history.push('/'))
   .catch((err) => setMessage(err || 'Неудачно'));
@@ -56,7 +53,7 @@ return (
           placeholder="Email"
           value={email || ''}
           onChange={handleChangeEmail}
-          minLength="1"
+          minLength="4"
           maxLength="30"
           autoComplete="off"
           required
@@ -84,7 +81,7 @@ return (
       </button>
       <div className='auth__form_singup'>
         <p className='auth__form-item'>Ещё не зарегистрированы?</p>
-        <Link to='/sign-up' className='auth__form-item'>Регистрация</Link>
+        <Link to='/sign-up' className='auth__form-item auth__form-item_link'>Регистрация</Link>
       </div>
 
   </Authorization>
