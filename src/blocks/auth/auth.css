@@ -1,0 +1,14 @@
+@import url(./__container/auth__container.css);
+@import url(./__title/auth__title.css);
+@import url(./__form-item/auth__form-item.css);
+@import url(./__form-item/_link/auth__form-item_link.css);
+@import url(./__signup/auth__signup.css);
+
+.auth {
+  max-width: 358px;
+  width: 40%;
+  min-width: 260px;
+  background-color: #000;
+  color: #FFFFFF;
+  margin: auto;
+}

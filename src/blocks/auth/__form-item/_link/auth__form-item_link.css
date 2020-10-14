@@ -1,0 +1,4 @@
+.auth__form-item_link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

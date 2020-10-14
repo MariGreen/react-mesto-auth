@@ -81,7 +81,7 @@ const Register = (props) => {
     <button type="submit" className="popup__save-button popup__save-button_invert">
         {loading ? `Регистрация...` : `Зарегистрироваться`}
       </button>
-      <div className='auth__form_singup'>
+      <div className='auth__signup'>
         <p className='auth__form-item'>Уже зарегистрированы?</p>
         <Link to='/sign-in' className='auth__form-item auth__form-item_link'>Войти
         </Link>

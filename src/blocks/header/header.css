@@ -1,4 +1,9 @@
 @import url(../header/__logo/header__logo.css);
+@import url(./__navbar/header__navbar.css);
+@import url(./__nav/header__nav.css);
+@import url(./__item/header__item.css);
+@import url(./__link/header__link.css);
+@import url(./__link/_loggedIn/header__link_loggedIn.css);
 
 .header {
   width: 100%;

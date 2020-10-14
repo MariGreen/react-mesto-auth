@@ -79,7 +79,7 @@ return (
     <button type="submit" className="popup__save-button popup__save-button_invert">
         {loading ? `Заходим...` : `Войти`}
       </button>
-      <div className='auth__form_singup'>
+      <div className='auth__signup'>
         <p className='auth__form-item'>Ещё не зарегистрированы?</p>
         <Link to='/sign-up' className='auth__form-item auth__form-item_link'>Регистрация</Link>
       </div>
