@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'http://www.api.mgreen.students.nomoreparties.space';
 
 export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   method: 'POST',
