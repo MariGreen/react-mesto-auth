@@ -46,7 +46,11 @@ function App() {
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
-    if (jwt) {
+    // const jwt1 = localStorage.token;
+    // console.log(jwt + ' ' + typeof(jwt));
+    // console.log(jwt1 + ' ' + typeof(jwt1));
+     if (jwt) {
+      // jwt - str
       auth.getContent(jwt)
         .then((res) => {
           if (res) {
@@ -70,6 +74,7 @@ function App() {
 
   const onAuth = (password, email) => auth.authorize(password, email)
   .then((data) => {
+    //data - obj, token - str
     if (!data) {
       throw new Error({ message: 'Токен не передан или передан не в том формате' });
     } else {

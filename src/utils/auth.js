@@ -35,7 +35,9 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
 })
   .then(((response) => response.json()))
   .then((data) => {
+    //data - obj 
     if (data.token) {
+      //data.token - str
       localStorage.setItem('jwt', data.token);
       return data.token;
     } else {
@@ -49,7 +51,7 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${localStorage.getItem(token)}`,
   },
 })
   .then((res) => res.json())
