@@ -27,9 +27,10 @@ const Register = (props) => {
     
     
     auth.register(email, password).then((response)=> {
-      if (response.status !== 400) {
+      if (response.status === 201) {
         props.onSuccessfulRegister();        
-        history.push('/sign-in/');        
+        history.push('/sign-in/');
+        return response.json()        
       } else {
         throw new Error ('Something went wrong');        
       }
