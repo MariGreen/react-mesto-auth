@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://www.api.mgreen.students.nomoreparties.space';
+export const BASE_URL = 'https://www.api.mgreen.students.nomoreparties.space';
 
 export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   method: 'POST',
@@ -35,6 +35,7 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
 })
   .then(((response) => response.json()))
   .then((data) => {
+    console.log(data);
     if (data.token) {
       localStorage.setItem('jwt', data.token);
       return data.token;
