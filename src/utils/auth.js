@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://www.api.mgreen.students.nomoreparties.space';
+export const BASE_URL = 'https://api.mgreen.students.nomoreparties.space';
 
 export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   method: 'POST',
@@ -8,22 +8,20 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   },
   body: JSON.stringify({ email, password }),
 })
-  .then((response) => {
-    try {
-      if (response.status === 200){
-        return response.json();
-      }
-      else {
-        return response;
-      };
-    } catch(err){
-      return (err)
+.then((response) => {
+  try {
+    if (response.status === 201){
+      return response.json();
     }
-  })
-  .then((res) => {
-    return res;
-  })
-  .catch((err) => console.log(err));
+  } catch(e){
+    return (e)
+  }
+})
+.then((res) => {
+  return res;
+})
+.catch((err) => console.log(err));
+; 
 
   export const authorize = (password, email) => fetch(`${BASE_URL}/signin`, {
   method: 'POST',
@@ -33,11 +31,20 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   },
   body: JSON.stringify({ password, email }),
 })
-  .then(((response) => response.json()))
+  .then(((res) => {
+    if (res.status === 400) {
+      throw new Error('Не передано одно из полей');
+    }
+    else if (res.status === 401) {
+      throw new Error('Пользователь с таким email не найден');
+    }
+    return res.json();
+  }))
   .then((data) => {
     console.log(data);
     if (data.token) {
       localStorage.setItem('jwt', data.token);
+      console.log(data.token + ' data.token есть');
       return data.token;
     } else {
       throw new Error('wrong!');

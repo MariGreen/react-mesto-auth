@@ -75,9 +75,9 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://www.api.mgreen.students.nomoreparties.space',
+  baseUrl: 'https://api.mgreen.students.nomoreparties.space',
   headers: {
-    authorization: 'f6237ee0-2461-4ab8-bf1b-c4683cc19aa7',
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
   },
 });

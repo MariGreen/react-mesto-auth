@@ -26,11 +26,13 @@ const Register = (props) => {
     evt.preventDefault();
     
     
-    auth.register(email, password).then((response)=> {
-      if (response.status !== 400) {
+    auth.register(email, password).then((res)=> {
+      if (res.ok) {
         props.onSuccessfulRegister();        
-        history.push('/sign-in');        
+        history.push('/sign-in');
+        return res;        
       } else {
+        console.log(res);
         throw new Error ('Something went wrong');        
       }
     })
