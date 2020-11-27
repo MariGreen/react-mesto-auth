@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.mgreen.students.nomoreparties.space';
 
 export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   method: 'POST',
@@ -25,11 +25,12 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   })
   .catch((err) => console.log(err));
 
-  export const authorize = (password, email) => fetch(`${BASE_URL}/signin`, {
+  export const authorize = (password, email, token) => fetch(`${BASE_URL}/signin`, {
   method: 'POST',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
   },
   body: JSON.stringify({ password, email }),
 })
@@ -44,7 +45,7 @@ export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   })
   .catch((err) => console.log(err));
 
-  export const getContent = (token) => fetch(`${BASE_URL}/users/me`, {
+  export const getContent = (token) => fetch(`${BASE_URL}/me`, {
   method: 'GET',
   headers: {
     Accept: 'application/json',

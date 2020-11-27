@@ -46,14 +46,20 @@ function App() {
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
+    //console.log(jwt); отрабатывает
+    //console.log(loggedIn); false
     if (jwt) {
       auth.getContent(jwt)
         .then((res) => {
+          console.log(res);
           if (res) {
             if (res === 401) {
+              // console.log(loggedIn); сюда не попадаем
               localStorage.removeItem(jwt);
             } else {
+              //console.log(loggedIn); false
               setLoggedIn(true);
+              //console.log(loggedIn); false!!!!
               setUserData({
                 email: res.data.email,
               });
@@ -70,6 +76,7 @@ function App() {
 
   const onAuth = (password, email) => auth.authorize(password, email)
   .then((data) => {
+    console.log(data);
     if (!data) {
       throw new Error({ message: 'Токен не передан или передан не в том формате' });
     } else {
@@ -195,13 +202,16 @@ function App() {
   }
 
   React.useEffect(() => {
+    //console.log(loggedIn); false
     Promise.all([api.getDefaultUserInfo(), api.getInitialCards()])
       .then((data) => {
-        setCurrentUser(data[0]);
+        setCurrentUser(data[0].data);
         setCards(data[1]);
+        //console.log(loggedIn); ; сюда не попадаем
       })
       .finally(() => {
         setInitialLoading(false);
+        //console.log(loggedIn); false
       })
       .catch((err) => {
         console.log(err);
