@@ -1,5 +1,7 @@
 export const BASE_URL = 'https://api.mgreen.students.nomoreparties.space';
 
+// export const BASE_URL = 'http://localhost:3001';
+
 export const register = (email, password ) => fetch(`${BASE_URL}/signup`, {
   method: 'POST',
   headers: {

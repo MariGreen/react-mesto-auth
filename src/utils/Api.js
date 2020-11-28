@@ -72,12 +72,15 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        _id: cardId        
+      }),
     }).then(this._handleResponse);
   }
 
@@ -97,6 +100,7 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://api.mgreen.students.nomoreparties.space',
+  // baseUrl: 'http://localhost:3001',
   // headers: {
   //   // authorization: `Bearer ${localStorage.getItem('token')}`,
   //   // authorization: `Bearer ${token}`,

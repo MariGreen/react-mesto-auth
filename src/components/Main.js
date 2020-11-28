@@ -6,7 +6,7 @@ import { InitialLoadingContext } from '../contexts/InitialLoadingContext';
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const initialLoading = React.useContext(InitialLoadingContext);
+  const initialLoading = React.useContext(InitialLoadingContext);  
 
   return (
     <div className="content">
