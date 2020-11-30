@@ -61,18 +61,18 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  changeLikeCardStatus(data, isLiked) {
-    return fetch(`${this.baseUrl}/cards/${data}/likes`, {
+  changeLikeCardStatus(cardID, isLiked) {
+    return fetch(`${this.baseUrl}/cards/${cardID}/likes`, {
       method: isLiked ? 'PUT' : 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
-      },
+      },      
     }).then(this._handleResponse);
   }
 
   deleteCard(cardId) {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -100,12 +100,7 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://api.mgreen.students.nomoreparties.space',
-  // baseUrl: 'http://localhost:3001',
-  // headers: {
-  //   // authorization: `Bearer ${localStorage.getItem('token')}`,
-  //   // authorization: `Bearer ${token}`,
-  //   'Content-Type': 'application/json',
-  // },
+  // baseUrl: 'http://localhost:3001',  
 });
 
 export default api;
