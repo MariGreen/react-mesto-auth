@@ -77,10 +77,7 @@ class Api {
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: cardId        
-      }),
+      },      
     }).then(this._handleResponse);
   }
 
